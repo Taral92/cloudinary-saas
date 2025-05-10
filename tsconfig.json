@@ -6,6 +6,7 @@
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
+    "types": ["@clerk/nextjs"],
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
