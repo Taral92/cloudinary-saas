@@ -13,6 +13,7 @@ const ispublicapiroute =createRouteMatcher([
 
 export default clerkMiddleware(async(auth,req)=>{
     const{userId}=await auth()
+   
     const currenturl=new URL(req.url)
     const isaccessingdashboard=currenturl.pathname === "/home"
     const isapirequest=currenturl.pathname.startsWith('api')
@@ -24,6 +25,9 @@ export default clerkMiddleware(async(auth,req)=>{
         if(!ispublicapiroute(req) && !ispublicroute(req)){
             return NextResponse.redirect(new URL('/sign-in',req.url))
         }
+      }
+      if(currenturl.pathname.startsWith('/socialshare') && !userId){
+        return NextResponse.redirect(new URL('/sign-in',req.url))
       }
       if(isapirequest && !ispublicapiroute(req)){
         return NextResponse.redirect(new URL('/sign-in',req.url))
