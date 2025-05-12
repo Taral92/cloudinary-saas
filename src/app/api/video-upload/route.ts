@@ -74,9 +74,11 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({video});
   } catch (error) {
-    if (error instanceof Error) {
-      return NextResponse.json({ message: error.message }, { status: 500 });
-    }
+    console.error("Image upload error:", error);
+    return NextResponse.json(
+      { message: error instanceof Error ? error.message : "Internal Server Error" },
+      { status: 500 }
+    );
   }finally{
     await prisma.$disconnect()
   }
