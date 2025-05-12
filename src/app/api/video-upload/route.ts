@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
         originalsize,
         compressessize,
         duration,
-        userId,
+       id:userId,
       },
     });
 
@@ -83,3 +83,17 @@ export async function POST(req: NextRequest) {
     await prisma.$disconnect()
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

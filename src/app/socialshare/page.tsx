@@ -59,7 +59,7 @@ console.log(uploadimage)
       });
       if (!response.ok) throw new Error("failed to upload a image");
       const data = await response.json();
-      setuploadimage(data.public_id);
+      setuploadimage(data.url);
     } catch (error) {
       if (error instanceof Error) {
         console.log(error.message);
@@ -69,7 +69,7 @@ console.log(uploadimage)
     }
   };
   const handledownalod = () => {
-    const url = `https://res.cloudinary.com/dmw4ou3zu/image/upload/${uploadimage}`;
+    const url = `${uploadimage}`;
     const a = document.createElement("a");
     a.href = url;
     a.download = `image-${format}.jpg`;

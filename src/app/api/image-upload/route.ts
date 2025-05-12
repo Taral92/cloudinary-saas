@@ -43,12 +43,15 @@ export async function POST(request: NextRequest) {
           }
       )
       return NextResponse.json(
-          {
-              publicId: result.public_id
-          },
-          {
-              status: 200
-          }
+       
+        {
+          publicId: result.public_id,
+          url: result.secure_url,
+          message:"Image uploaded successfully",
+        },
+        {
+          status: 200
+        }
       )
 
   } catch (error) {
