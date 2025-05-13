@@ -1,6 +1,8 @@
 import { v2 as cloudinary } from "cloudinary";
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
+
+
 cloudinary.config({
   cloud_name: "dmw4ou3zu",
   api_key: "273611871567345",

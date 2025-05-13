@@ -129,7 +129,8 @@ exports.Prisma.VideoScalarFieldEnum = {
   compressessize: 'compressessize',
   duration: 'duration',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  userId: 'userId'
 };
 
 exports.Prisma.SortOrder = {

@@ -889,6 +889,7 @@ export namespace Prisma {
     duration: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    userId: string | null
   }
 
   export type VideoMaxAggregateOutputType = {
@@ -901,6 +902,7 @@ export namespace Prisma {
     duration: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    userId: string | null
   }
 
   export type VideoCountAggregateOutputType = {
@@ -913,6 +915,7 @@ export namespace Prisma {
     duration: number
     createdAt: number
     updatedAt: number
+    userId: number
     _all: number
   }
 
@@ -927,6 +930,7 @@ export namespace Prisma {
     duration?: true
     createdAt?: true
     updatedAt?: true
+    userId?: true
   }
 
   export type VideoMaxAggregateInputType = {
@@ -939,6 +943,7 @@ export namespace Prisma {
     duration?: true
     createdAt?: true
     updatedAt?: true
+    userId?: true
   }
 
   export type VideoCountAggregateInputType = {
@@ -951,6 +956,7 @@ export namespace Prisma {
     duration?: true
     createdAt?: true
     updatedAt?: true
+    userId?: true
     _all?: true
   }
 
@@ -1036,6 +1042,7 @@ export namespace Prisma {
     duration: string
     createdAt: Date
     updatedAt: Date
+    userId: string | null
     _count: VideoCountAggregateOutputType | null
     _min: VideoMinAggregateOutputType | null
     _max: VideoMaxAggregateOutputType | null
@@ -1065,6 +1072,7 @@ export namespace Prisma {
     duration?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    userId?: boolean
   }, ExtArgs["result"]["video"]>
 
   export type VideoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1077,6 +1085,7 @@ export namespace Prisma {
     duration?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    userId?: boolean
   }, ExtArgs["result"]["video"]>
 
   export type VideoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1089,6 +1098,7 @@ export namespace Prisma {
     duration?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    userId?: boolean
   }, ExtArgs["result"]["video"]>
 
   export type VideoSelectScalar = {
@@ -1101,9 +1111,10 @@ export namespace Prisma {
     duration?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    userId?: boolean
   }
 
-  export type VideoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "publicid" | "originalsize" | "compressessize" | "duration" | "createdAt" | "updatedAt", ExtArgs["result"]["video"]>
+  export type VideoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "publicid" | "originalsize" | "compressessize" | "duration" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["video"]>
 
   export type $VideoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Video"
@@ -1118,6 +1129,7 @@ export namespace Prisma {
       duration: string
       createdAt: Date
       updatedAt: Date
+      userId: string | null
     }, ExtArgs["result"]["video"]>
     composites: {}
   }
@@ -1550,6 +1562,7 @@ export namespace Prisma {
     readonly duration: FieldRef<"Video", 'String'>
     readonly createdAt: FieldRef<"Video", 'DateTime'>
     readonly updatedAt: FieldRef<"Video", 'DateTime'>
+    readonly userId: FieldRef<"Video", 'String'>
   }
     
 
@@ -1939,7 +1952,8 @@ export namespace Prisma {
     compressessize: 'compressessize',
     duration: 'duration',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    userId: 'userId'
   };
 
   export type VideoScalarFieldEnum = (typeof VideoScalarFieldEnum)[keyof typeof VideoScalarFieldEnum]
@@ -2032,6 +2046,7 @@ export namespace Prisma {
     duration?: StringFilter<"Video"> | string
     createdAt?: DateTimeFilter<"Video"> | Date | string
     updatedAt?: DateTimeFilter<"Video"> | Date | string
+    userId?: StringNullableFilter<"Video"> | string | null
   }
 
   export type VideoOrderByWithRelationInput = {
@@ -2044,6 +2059,7 @@ export namespace Prisma {
     duration?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    userId?: SortOrderInput | SortOrder
   }
 
   export type VideoWhereUniqueInput = Prisma.AtLeast<{
@@ -2059,6 +2075,7 @@ export namespace Prisma {
     duration?: StringFilter<"Video"> | string
     createdAt?: DateTimeFilter<"Video"> | Date | string
     updatedAt?: DateTimeFilter<"Video"> | Date | string
+    userId?: StringNullableFilter<"Video"> | string | null
   }, "id">
 
   export type VideoOrderByWithAggregationInput = {
@@ -2071,6 +2088,7 @@ export namespace Prisma {
     duration?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    userId?: SortOrderInput | SortOrder
     _count?: VideoCountOrderByAggregateInput
     _max?: VideoMaxOrderByAggregateInput
     _min?: VideoMinOrderByAggregateInput
@@ -2089,6 +2107,7 @@ export namespace Prisma {
     duration?: StringWithAggregatesFilter<"Video"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Video"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Video"> | Date | string
+    userId?: StringNullableWithAggregatesFilter<"Video"> | string | null
   }
 
   export type VideoCreateInput = {
@@ -2101,6 +2120,7 @@ export namespace Prisma {
     duration: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    userId?: string | null
   }
 
   export type VideoUncheckedCreateInput = {
@@ -2113,6 +2133,7 @@ export namespace Prisma {
     duration: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    userId?: string | null
   }
 
   export type VideoUpdateInput = {
@@ -2125,6 +2146,7 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type VideoUncheckedUpdateInput = {
@@ -2137,6 +2159,7 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type VideoCreateManyInput = {
@@ -2149,6 +2172,7 @@ export namespace Prisma {
     duration: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    userId?: string | null
   }
 
   export type VideoUpdateManyMutationInput = {
@@ -2161,6 +2185,7 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type VideoUncheckedUpdateManyInput = {
@@ -2173,6 +2198,7 @@ export namespace Prisma {
     duration?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -2231,6 +2257,7 @@ export namespace Prisma {
     duration?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    userId?: SortOrder
   }
 
   export type VideoMaxOrderByAggregateInput = {
@@ -2243,6 +2270,7 @@ export namespace Prisma {
     duration?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    userId?: SortOrder
   }
 
   export type VideoMinOrderByAggregateInput = {
@@ -2255,6 +2283,7 @@ export namespace Prisma {
     duration?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    userId?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {

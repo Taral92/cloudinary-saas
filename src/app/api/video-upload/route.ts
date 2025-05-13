@@ -1,8 +1,8 @@
 import { v2 as cloudinary } from "cloudinary";
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
-import { PrismaClient } from "@/generated/prisma";
-const prisma = new PrismaClient();
+import { PrismaClient } from "@/generated/prisma"; // if tsconfig paths are set
+const prisma = new PrismaClient()
 
 cloudinary.config({
   cloud_name: "dmw4ou3zu",
@@ -12,9 +12,9 @@ cloudinary.config({
 
 interface CloudinaryResult {
   public_id: string;
-  bytes: string;
-  duration: string;
-  [key: string]: string;
+  bytes: number;
+  duration: number;
+  [key: string]: string | number;
 }
 
 export async function POST(req: NextRequest) {
@@ -28,10 +28,10 @@ export async function POST(req: NextRequest) {
     const formdata = await req.formData();
     const file = formdata.get("file") as File;
     const title = formdata.get("title") as string;
-    const description = formdata.get("description") as string;
-    const originalsize = formdata.get("originalsize") as string;
-    const compressessize = formdata.get("compressessize") as string;
-    const duration = formdata.get("duration") as string;
+    const description = formdata.get("description") as string | null;
+    const originalsize = formdata.get("originalsize") as string | null;
+    const compressessize = formdata.get("compressessize") as string | null;
+    const duration = formdata.get("duration") as string | null;
 
     if (!file) {
       return NextResponse.json({ message: "No file uploaded" }, { status: 400 });
@@ -64,12 +64,12 @@ export async function POST(req: NextRequest) {
     const video = await prisma.video.create({
       data: {
         title,
-        description,
+        description: description ?? "",
         publicid: result.public_id,
-        originalsize,
-        compressessize,
-        duration,
-       id:userId,
+        originalsize: originalsize ?? "",
+        compressessize: compressessize ?? "",
+        duration: duration ?? "",
+        userId:userId ?? ""
       },
     });
 
