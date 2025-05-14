@@ -1,0 +1,2 @@
+# Ignore Prisma client runtime
+src/prisma/client/runtime/*
