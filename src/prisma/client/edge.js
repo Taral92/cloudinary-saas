@@ -135,7 +135,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/taralbabubhaipatel/Downloads/project_x/cloudinary-saas/prisma/src/generated/prisma",
+      "value": "/Users/taralbabubhaipatel/Downloads/project_x/prisma/client",
       "fromEnvVar": null
     },
     "config": {
@@ -154,9 +154,9 @@ const config = {
   },
   "relativeEnvPaths": {
     "rootEnvPath": null,
-    "schemaEnvPath": "../../../../.env"
+    "schemaEnvPath": "../../cloudinary-saas/.env"
   },
-  "relativePath": "../../..",
+  "relativePath": "../../cloudinary-saas/prisma",
   "clientVersion": "6.7.0",
   "engineVersion": "3cff47a7f5d65c3ea74883f1d736e41d68ce91ed",
   "datasourceNames": [
@@ -172,8 +172,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"./src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Video {\n  id             String   @id @default(cuid())\n  title          String\n  description    String?\n  publicid       String\n  originalsize   String\n  compressessize String\n  duration       String\n  createdAt      DateTime @default(now())\n  updatedAt      DateTime @default(now())\n  userId         String? // optional for now\n}\n",
-  "inlineSchemaHash": "eedfaca9a5c1582a435046e1ba73f62f8360f272c0ba0d98227849c226b37585",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../../prisma/client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Video {\n  id             String   @id @default(cuid())\n  title          String\n  description    String?\n  publicid       String\n  originalsize   String\n  compressessize String\n  duration       String\n  createdAt      DateTime @default(now())\n  updatedAt      DateTime @default(now())\n  userId         String? // optional for now\n}\n",
+  "inlineSchemaHash": "dfc900ff81e20cec8ed57f29a98e1b4f39fed15f6be6e493bb5cbff0627db21e",
   "copyEngine": true
 }
 config.dirname = '/'
