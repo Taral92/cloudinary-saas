@@ -1,11 +1,14 @@
-/* src/app/globals.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
+@import "tailwindcss/utilities";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,5 +21,5 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans, Arial, Helvetica, sans-serif);
 }
