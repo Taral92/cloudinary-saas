@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import { CldImage } from "next-cloudinary";
+import { jsPDF } from "jspdf";
 
 const socialformats = {
   "instagram-square": {
@@ -34,13 +35,12 @@ const socialformats = {
 };
 type socialformat = keyof typeof socialformats;
 const SocialShare = () => {
-  
   const [uploadimage, setuploadimage] = useState<string | null>(null);
   const [format, setformat] = useState<socialformat>("instagram-square");
   const [isloading, setisloading] = useState<boolean>(false);
   const [istransforming, setistransforming] = useState<boolean>(false);
   const imageref = useRef<HTMLImageElement | null>(null);
-console.log(uploadimage)
+  console.log(uploadimage);
   useEffect(() => {
     if (uploadimage) {
       setistransforming(true);
@@ -71,20 +71,21 @@ console.log(uploadimage)
   const handledownload = async () => {
     try {
       const response = await fetch(uploadimage!, { mode: "cors" });
-      
+
       if (!response.ok) {
         console.error("Fetch failed:", response.status, response.statusText);
         return;
       }
-  
+
       const blob = await response.blob();
       console.log("Blob received:", blob);
-  
+
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
+      console.log(url);
       a.href = url;
       a.download = `image-${format}.jpg`;
-  
+
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -93,12 +94,41 @@ console.log(uploadimage)
       console.error("Download failed:", error);
     }
   };
+  const handlePdfDownload = async () => {
+    if (!uploadimage) return;
+  
+    const response = await fetch(uploadimage);
+    const blob = await response.blob();
+  
+    const reader = new FileReader();
+    reader.onload = () => {
+      const imgData = reader.result as string;
+      const pdf = new jsPDF({
+        orientation:
+          socialformats[format].width > socialformats[format].height
+            ? "landscape"
+            : "portrait",
+        unit: "px",
+        format: [socialformats[format].width, socialformats[format].height],
+      });
+  
+      pdf.addImage(
+        imgData,
+        "JPEG",
+        0,
+        0,
+        socialformats[format].width,
+        socialformats[format].height
+      );
+      pdf.save(`social-${format}.pdf`);
+    };
+    reader.readAsDataURL(blob);
+  };
   return (
     <div className="container mx-auto p-4 max-w-4xl">
       <h1 className="text-3xl font-bold mb-6 text-center">
         Social Media Image Creator
       </h1>
-     
 
       <div className="card">
         <div className="card-body">
@@ -164,6 +194,9 @@ console.log(uploadimage)
               <div className="card-actions justify-end mt-6">
                 <button className="btn btn-primary" onClick={handledownload}>
                   Download for {format}
+                </button>
+                <button className="btn btn-primary" onClick={handlePdfDownload}>
+                  Download for pdf {format}
                 </button>
               </div>
             </div>
