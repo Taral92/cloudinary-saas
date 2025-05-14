@@ -68,16 +68,31 @@ console.log(uploadimage)
       setisloading(false);
     }
   };
-  const handledownalod = () => {
-    const url = `${uploadimage}`;
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `image-${format}.jpg`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
+  const handledownload = async () => {
+    try {
+      const response = await fetch(uploadimage!, { mode: "cors" });
+      
+      if (!response.ok) {
+        console.error("Fetch failed:", response.status, response.statusText);
+        return;
+      }
+  
+      const blob = await response.blob();
+      console.log("Blob received:", blob);
+  
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `image-${format}.jpg`;
+  
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Download failed:", error);
+    }
   };
-
   return (
     <div className="container mx-auto p-4 max-w-4xl">
       <h1 className="text-3xl font-bold mb-6 text-center">
@@ -147,7 +162,7 @@ console.log(uploadimage)
               </div>
 
               <div className="card-actions justify-end mt-6">
-                <button className="btn btn-primary" onClick={handledownalod}>
+                <button className="btn btn-primary" onClick={handledownload}>
                   Download for {format}
                 </button>
               </div>
