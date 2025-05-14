@@ -1,9 +1,8 @@
-import daisyui from "daisyui";
-const config = {
-  plugins: [daisyui],
-  daisyui:{
-    themes: ["dark"],
-  }
+module.exports = {
+  plugins: {
+    '@tailwindcss/postcss': {},
+    autoprefixer: {},
+  },
 };
 
-export default config;
+
