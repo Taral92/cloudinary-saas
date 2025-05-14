@@ -8,12 +8,30 @@ export default function VideoUpload() {
   const [title, settitle] = useState<string>("");
   const [description, setdescription] = useState<string>("");
   const [isuploaing, setisuploaing] = useState<boolean>(false);
+  const [videourl, setvideourl] = useState<string | null>(null);
 
   const router = useRouter();
   const handlefilechange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     setfile(file ?? null);
   };
+  const handledownalod = (e: React.MouseEvent<HTMLButtonElement>) => {
+    try {
+      e.preventDefault();
+      if(!videourl) return;
+      const a=document.createElement("a")
+      a.href=videourl;
+      a.download="video.mp4";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+    catch(error){
+     if(error instanceof Error){
+        console.log(error.message)
+      }
+    }
+  }
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!file) {
@@ -32,7 +50,8 @@ export default function VideoUpload() {
       });
       if (response.status === 200) {
         alert("Video uploaded successfully");
-        router.push("/");
+        setvideourl(response.data.url);
+        
       }
       console.log(response.data);
     } catch (error) {
@@ -63,6 +82,14 @@ export default function VideoUpload() {
         </button>
         {isuploaing ? "Uploading..." : "Upload"}
       </form>
+        {
+          videourl && (
+            <div>
+              <video src={videourl!} controls />
+              <button onClick={handledownalod}>Download</button>
+            </div>
+          )
+        }
     </div>
   );
 }
