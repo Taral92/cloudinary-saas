@@ -4,32 +4,32 @@ import { CldImage } from "next-cloudinary";
 
 const socialformats = {
   "instagram-square": {
-    width: 1024,
-    height: 1024,
+    width: 1080,
+    height: 1080,
     crop: "fill",
     format: "instagram_square",
     aspectRatio: "1:1",
   },
   twitter: {
-    width: 1024,
-    height: 1024,
-    crop: "fill",
-    format: "twitter",
-    aspectRatio: "1:1",
-  },
-  facebook: {
-    width: 1024,
-    height: 1024,
-    crop: "fill",
-    format: "facebook",
-    aspectRatio: "1:1",
-  },
-  twitterheader: {
-    width: 1024,
-    height: 1024,
+    width: 1200,
+    height: 675,
     crop: "fill",
     format: "twitter",
     aspectRatio: "16:9",
+  },
+  facebook: {
+    width: 1200,
+    height: 630,
+    crop: "fill",
+    format: "facebook",
+    aspectRatio: "16:9",
+  },
+  twitterheader: {
+    width: 1500,
+    height: 500,
+    crop: "fill",
+    format: "twitter_header",
+    aspectRatio: "3:1",
   },
 };
 type socialformat = keyof typeof socialformats;
