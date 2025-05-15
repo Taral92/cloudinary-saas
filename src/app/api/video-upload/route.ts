@@ -5,9 +5,9 @@ import { PrismaClient } from "../../../../@prisma/client";
 const prisma = new PrismaClient()
 
 cloudinary.config({
-  cloud_name: "dmw4ou3zu",
-  api_key: "273611871567345",
-  api_secret: "d2M0byRPsou_7iaGXFaHITH2UmY",
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 interface CloudinaryResult {
