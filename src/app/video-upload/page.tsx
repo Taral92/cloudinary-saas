@@ -40,16 +40,16 @@ export default function VideoUpload() {
       formdata.append("file", file ?? "");
       formdata.append("title", title);
       formdata.append("description", description);
-      const response = await axios.post("/api/video-upload", formdata, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      if (response.status === 200) {
+      const response =await fetch("/api/video-upload",{
+        method:"POST",
+        body:formdata
+      })
+      const data = await response.json();
+      if (data.status === 200) {
         alert("Video uploaded successfully");
-        setvideourl(response.data.url);
+        setvideourl(data.url);
       }
-      console.log(response.data);
+      console.log(data);
     } catch (error) {
       if (error instanceof Error) {
         console.log(error.message);
