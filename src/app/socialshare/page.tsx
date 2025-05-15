@@ -138,6 +138,7 @@ const SocialShare = () => {
               <span className="label-text">Choose an image file</span>
             </label>
             <input
+            accept=".jpg,.jpeg,.png"
               type="file"
               onChange={handlefile}
               className="file-input file-input-bordered file-input-primary w-full"
