@@ -7,7 +7,7 @@ function Home() {
   return (
     <div>
       <div>
-        <button onClick={()=>router.push("/image-upload")}>Image Upload</button>
+        <button onClick={()=>router.push("/socialshare")}>Image Upload</button>
       </div>
       <div>
         <button onClick={()=>router.push("/video-upload")}>Video Upload</button>
