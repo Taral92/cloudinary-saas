@@ -1,8 +1,18 @@
+"use client"
 import React from 'react'
+import { useRouter } from 'next/navigation'
 
 function Home() {
+    const router=useRouter()
   return (
-    <div>Home</div>
+    <div>
+      <div>
+        <button onClick={()=>router.push("/image-upload")}>Image Upload</button>
+      </div>
+      <div>
+        <button onClick={()=>router.push("/video-upload")}>Video Upload</button>
+      </div>
+    </div>
   )
 }
 
