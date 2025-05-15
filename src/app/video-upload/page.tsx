@@ -1,7 +1,6 @@
 "use client";
 import axios from "axios";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 
 export default function VideoUpload() {
   const [file, setfile] = useState<File | null>(null);
@@ -10,7 +9,6 @@ export default function VideoUpload() {
   const [isuploaing, setisuploaing] = useState<boolean>(false);
   const [videourl, setvideourl] = useState<string | null>(null);
 
-  const router = useRouter();
   const handlefilechange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     setfile(file ?? null);
@@ -18,20 +16,19 @@ export default function VideoUpload() {
   const handledownalod = (e: React.MouseEvent<HTMLButtonElement>) => {
     try {
       e.preventDefault();
-      if(!videourl) return;
-      const a=document.createElement("a")
-      a.href=videourl;
-      a.download="video.mp4";
+      if (!videourl) return;
+      const a = document.createElement("a");
+      a.href = videourl;
+      a.download = "video.mp4";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-    }
-    catch(error){
-     if(error instanceof Error){
-        console.log(error.message)
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
       }
     }
-  }
+  };
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!file) {
@@ -43,7 +40,7 @@ export default function VideoUpload() {
       formdata.append("file", file ?? "");
       formdata.append("title", title);
       formdata.append("description", description);
-      const response = await axios.post("/api/video-upload", formdata, {
+      const response = await axios.post("/app/api/video-upload", formdata, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -51,7 +48,6 @@ export default function VideoUpload() {
       if (response.status === 200) {
         alert("Video uploaded successfully");
         setvideourl(response.data.url);
-        
       }
       console.log(response.data);
     } catch (error) {
@@ -82,45 +78,12 @@ export default function VideoUpload() {
         </button>
         {isuploaing ? "Uploading..." : "Upload"}
       </form>
-        {
-          videourl && (
-            <div>
-              <video src={videourl!} controls />
-              <button onClick={handledownalod}>Download</button>
-            </div>
-          )
-        }
+      {videourl && (
+        <div>
+          <video src={videourl!} controls />
+          <button onClick={handledownalod}>Download</button>
+        </div>
+      )}
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
