@@ -40,7 +40,7 @@ export default function VideoUpload() {
       formdata.append("file", file ?? "");
       formdata.append("title", title);
       formdata.append("description", description);
-      const response = await axios.post("/app/api/video-upload", formdata, {
+      const response = await axios.post("/api/video-upload", formdata, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
