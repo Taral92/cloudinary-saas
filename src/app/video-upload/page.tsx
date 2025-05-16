@@ -45,7 +45,8 @@ export default function VideoUpload() {
   
       const response = await axios.post("/api/video-upload", formdata);
       const data = response.data;
-  
+     console.log(data);
+     
       if (response.status === 200 && data.url) {
         alert("Video uploaded successfully");
         setvideourl(data.url); 

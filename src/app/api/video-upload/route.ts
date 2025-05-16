@@ -1,8 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
-import { PrismaClient } from "../../../../@prisma/client";
-const prisma = new PrismaClient()
+import prisma from "@/prisma/client"
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -17,7 +16,7 @@ interface CloudinaryResult {
   [key: string]: string | number;
 }
 
-export async function POST(req: NextRequest) {
+export async function  POST(req: NextRequest) {
   
   const { userId } = await auth();
   if (!userId) {
