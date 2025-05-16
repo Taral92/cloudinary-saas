@@ -1,7 +1,8 @@
 import { v2 as cloudinary } from "cloudinary";
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
-import prisma from "@prisma/client"
+
+import {PrismaClient} from "@prisma/client"
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -60,7 +61,7 @@ export async function  POST(req: NextRequest) {
       uploadStream.end(buffer);
     });
 
-    const video = await prisma.video.create({
+    const video = await PrismaClient.Video.create({
       data: {
         title,
         description: description ?? "",
