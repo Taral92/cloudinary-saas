@@ -9,6 +9,7 @@ const ispublicroute =createRouteMatcher([
 ])
 const ispublicapiroute =createRouteMatcher([
     '/api/videos',
+    '/api/video-upload'
 ])
 
 export default clerkMiddleware(async(auth,req)=>{

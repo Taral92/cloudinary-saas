@@ -32,28 +32,28 @@ export default function VideoUpload() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!file) {
-      alert("file is not found");
+      alert("File is not found");
+      return;
     }
+  
     setisuploaing(true);
     try {
       const formdata = new FormData();
-      formdata.append("file", file ?? "");
+      formdata.append("file", file);
       formdata.append("title", title);
       formdata.append("description", description);
-      const response =await fetch("/api/video-upload",{
-        method:"POST",
-        body:formdata
-      })
-      const data = await response.json();
-      if (data.status === 200) {
+  
+      const response = await axios.post("/api/video-upload", formdata);
+      const data = response.data;
+  
+      if (response.status === 200 && data.url) {
         alert("Video uploaded successfully");
-        setvideourl(data.url);
+        setvideourl(data.url); 
+      } else {
+        console.error("Unexpected response", data);
       }
-      console.log(data);
     } catch (error) {
-      if (error instanceof Error) {
-        console.log(error.message);
-      }
+      console.error("Upload failed:", error);
     } finally {
       setisuploaing(false);
     }
