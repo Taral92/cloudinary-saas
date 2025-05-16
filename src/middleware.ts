@@ -17,6 +17,9 @@ export default clerkMiddleware(async(auth,req)=>{
     const currenturl=new URL(req.url)
     const isaccessingdashboard=currenturl.pathname === "/home"
     const isapirequest=currenturl.pathname.startsWith('api')
+    if (currenturl.pathname === "/") {
+      return NextResponse.redirect(new URL(userId ? '/home' : '/sign-in', req.url));
+    }
       if(userId && ispublicroute(req) && !isaccessingdashboard){
         return NextResponse.redirect(new URL('/home',req.url))
       }

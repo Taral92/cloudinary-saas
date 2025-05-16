@@ -1,13 +1,15 @@
-"use client"
-import React from 'react'
-import { useRouter } from 'next/navigation'
+"use client";
+import React from "react";
+import { useRouter } from "next/navigation";
 
 function Home() {
   const router = useRouter();
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-black via-gray-900 to-black text-white space-y-6 px-4">
-      <h1 className="text-4xl font-extrabold mb-8 tracking-wide">🔥 Choose Your Action</h1>
+      <h1 className="text-4xl font-extrabold mb-8 tracking-wide">
+        🔥 Choose Your Action
+      </h1>
 
       <button
         onClick={() => router.push("/socialshare")}
