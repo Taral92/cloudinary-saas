@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import React, { useState } from "react";
+import { CldVideoPlayer } from "next-cloudinary";
 
 export default function VideoUpload() {
   const [file, setfile] = useState<File | null>(null);
@@ -35,21 +36,21 @@ export default function VideoUpload() {
       alert("File is not found");
       return;
     }
-  
+
     setisuploaing(true);
     try {
       const formdata = new FormData();
       formdata.append("file", file);
       formdata.append("title", title);
       formdata.append("description", description);
-  
+
       const response = await axios.post("/api/video-upload", formdata);
       const data = response.data;
-     console.log(data);
-     
+      console.log(data);
+
       if (response.status === 200 && data.url) {
         alert("Video uploaded successfully");
-        setvideourl(data.url); 
+        setvideourl(data.url);
       } else {
         console.error("Unexpected response", data);
       }
@@ -81,7 +82,18 @@ export default function VideoUpload() {
       </form>
       {videourl && (
         <div>
-          <video src={videourl!} controls />
+          {videourl && (
+            <CldVideoPlayer
+              id="adaptive-bitrate-streaming"
+              width="1620"
+              height="1080"
+              src={videourl}
+              transformation={{
+                streaming_profile: "hd",
+              }}
+              sourceTypes={["hls"]}
+            />
+          )}
           <button onClick={handledownalod}>Download</button>
         </div>
       )}
