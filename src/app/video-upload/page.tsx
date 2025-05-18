@@ -1,102 +1,124 @@
 "use client";
-import axios from "axios";
 import React, { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import { CldVideoPlayer } from "next-cloudinary";
+import "next-cloudinary/dist/cld-video-player.css";
 
-export default function VideoUpload() {
-  const [file, setfile] = useState<File | null>(null);
-  const [title, settitle] = useState<string>("");
-  const [description, setdescription] = useState<string>("");
-  const [isuploaing, setisuploaing] = useState<boolean>(false);
-  const [videourl, setvideourl] = useState<string | null>(null);
 
-  const handlefilechange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    setfile(file ?? null);
-  };
-  const handledownalod = (e: React.MouseEvent<HTMLButtonElement>) => {
-    try {
-      e.preventDefault();
-      if (!videourl) return;
-      const a = document.createElement("a");
-      a.href = videourl;
-      a.download = "video.mp4";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    } catch (error) {
-      if (error instanceof Error) {
-        console.log(error.message);
-      }
-    }
-  };
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+function VideoUpload() {
+  const [file, setFile] = useState<File | null>(null);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+  const [videoid ,setvideoid]=useState<string | null>(null);
+
+  const router = useRouter();
+
+  const MAX_FILE_SIZE = 70 * 1024 * 1024;
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!file) {
-      alert("File is not found");
+    if (!file) return;
+
+    if (file.size > MAX_FILE_SIZE) {
+      alert("File size too large");
       return;
     }
 
-    setisuploaing(true);
+    setIsUploading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("originalSize", file.size.toString());
+
     try {
-      const formdata = new FormData();
-      formdata.append("file", file);
-      formdata.append("title", title);
-      formdata.append("description", description);
-
-      const response = await axios.post("/api/video-upload", formdata);
-      const data = response.data;
-      console.log(data);
-
-      if (response.status === 200 && data.url) {
+      const response = await axios.post("/api/video-upload", formData);
+      if (response.status === 200) {
+        const publicId=response.data.publicId;
+        setvideoid(publicId);
         alert("Video uploaded successfully");
-        setvideourl(data.url);
-      } else {
-        console.error("Unexpected response", data);
+       
       }
-    } catch (error) {
-      console.error("Upload failed:", error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.log("Upload error:", error.message);
+      } else if (
+        typeof error === "object" &&
+        error !== null &&
+        "response" in error
+      ) {
+        if ("response" in error) {
+          console.log(
+            "Upload error:",
+            (error as unknown as { response: { data: unknown } }).response?.data
+          );
+        }
+      } else {
+        console.log("Unknown upload error", error);
+      }
+      alert("Failed to upload video");
     } finally {
-      setisuploaing(false);
+      setIsUploading(false);
     }
   };
+
   return (
-    <div>
-      <h1>Video Upload</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="file" onChange={handlefilechange} />
-        <input
-          type="text"
-          placeholder="Title"
-          onChange={(e) => settitle(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Desription"
-          onChange={(e) => setdescription(e.target.value)}
-        />
-        <button type="submit" disabled={isuploaing}>
-          Upload
-        </button>
-        {isuploaing ? "Uploading..." : "Upload"}
-      </form>
-      {videourl && (
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Upload Video</h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          {videourl && (
-            <CldVideoPlayer
-              id="adaptive-bitrate-streaming"
-              width="1620"
-              height="1080"
-              src={videourl}
-              transformation={{
-                streaming_profile: "hd",
-              }}
-              sourceTypes={["hls"]}
-            />
-          )}
-          <button onClick={handledownalod}>Download</button>
+          <label className="label">
+            <span className="label-text">Title</span>
+          </label>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="input input-bordered w-full"
+            required
+          />
         </div>
-      )}
+        <div>
+          <label className="label">
+            <span className="label-text">Description</span>
+          </label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="textarea textarea-bordered w-full"
+          />
+        </div>
+        <div>
+          <label className="label">
+            <span className="label-text">Video File</span>
+          </label>
+          <input
+            type="file"
+            accept="video/*"
+            onChange={(e) => setFile(e.target.files?.[0] || null)}
+            className="file-input file-input-bordered w-full"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          className="btn btn-primary"
+          disabled={isUploading}
+        >
+          {isUploading ? "Uploading..." : "Upload Video"}
+        </button>
+      </form>
+      <div>
+       {
+        videoid && (
+          <CldVideoPlayer width="1920" height="1080" src={videoid} />
+        )
+      }
+      </div>
     </div>
   );
 }
+
+export default VideoUpload;

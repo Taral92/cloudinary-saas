@@ -35,9 +35,9 @@ export async function POST(req: NextRequest) {
     maxWidth: width - 100,
   });
 
-  const pdfBytes = await pdfDoc.save();
+  const pdf = await pdfDoc.save();
 
-  return new NextResponse(pdfBytes, {
+  return new NextResponse(pdf, {
     headers: {
       "Content-Type": "application/pdf",
       "Content-Disposition": "attachment; filename=converted.pdf",
