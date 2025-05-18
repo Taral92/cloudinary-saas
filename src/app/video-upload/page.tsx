@@ -1,12 +1,14 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
+
 
 import { CldVideoPlayer } from "next-cloudinary";
 import "next-cloudinary/dist/cld-video-player.css";
 
 function VideoUpload() {
   const [file, setFile] = useState<File | null>(null);
+  const fileRef = useRef<HTMLInputElement | null>(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isUploading, setIsUploading] = useState(false);
@@ -40,7 +42,9 @@ function VideoUpload() {
         setvideoid(publicId);
         setFile(null);
         setTitle("");
+        console.log(publicId);
         setDescription("");
+        if (fileRef.current) fileRef.current.value = ""; 
         alert("Video uploaded successfully");
       }
     } catch (error: unknown) {
@@ -98,6 +102,7 @@ function VideoUpload() {
           </label>
           <input
             type="file"
+            ref={fileRef}
             accept="video/*"
             onChange={(e) => setFile(e.target.files?.[0] || null)}
             className="file-input file-input-bordered w-full"
@@ -116,7 +121,12 @@ function VideoUpload() {
         {videoid && (
           <div className="mt-8 flex justify-center items-center bg-black rounded-2xl shadow-lg p-4">
             <div className="w-full max-w-5xl aspect-video overflow-hidden rounded-xl border border-gray-700">
-              <CldVideoPlayer width="100%" height="100%" src={videoid} />
+            <CldVideoPlayer
+              src={videoid}
+              width="640"
+              height="360"
+              aspectRatio="16:9"
+            />
             </div>
           </div>
         )}
