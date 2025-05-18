@@ -26,7 +26,7 @@ function VideoUpload() {
     }
 
     setIsUploading(true);
-    setvideoid(null);
+    
     const formData = new FormData();
     formData.append("file", file);
     formData.append("title", title);
@@ -38,6 +38,9 @@ function VideoUpload() {
       if (response.status === 200) {
         const publicId = response.data.publicId;
         setvideoid(publicId);
+        setFile(null);
+        setTitle("");
+        setDescription("");
         alert("Video uploaded successfully");
       }
     } catch (error: unknown) {
