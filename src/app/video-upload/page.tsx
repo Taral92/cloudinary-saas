@@ -1,19 +1,18 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+
 import { CldVideoPlayer } from "next-cloudinary";
 import "next-cloudinary/dist/cld-video-player.css";
-
 
 function VideoUpload() {
   const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isUploading, setIsUploading] = useState(false);
-  const [videoid ,setvideoid]=useState<string | null>(null);
+  const [videoid, setvideoid] = useState<string | null>(null);
 
-  const router = useRouter();
+ 
 
   const MAX_FILE_SIZE = 70 * 1024 * 1024;
 
@@ -27,6 +26,7 @@ function VideoUpload() {
     }
 
     setIsUploading(true);
+    setvideoid(null);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("title", title);
@@ -36,10 +36,9 @@ function VideoUpload() {
     try {
       const response = await axios.post("/api/video-upload", formData);
       if (response.status === 200) {
-        const publicId=response.data.publicId;
+        const publicId = response.data.publicId;
         setvideoid(publicId);
         alert("Video uploaded successfully");
-       
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -111,11 +110,13 @@ function VideoUpload() {
         </button>
       </form>
       <div>
-       {
-        videoid && (
-          <CldVideoPlayer width="1920" height="1080" src={videoid} />
-        )
-      }
+        {videoid && (
+          <div className="mt-8 flex justify-center items-center bg-black rounded-2xl shadow-lg p-4">
+            <div className="w-full max-w-5xl aspect-video overflow-hidden rounded-xl border border-gray-700">
+              <CldVideoPlayer width="100%" height="100%" src={videoid} />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
